@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese History - 日本の歴史</title>
+    <meta name="description" content="Explore the rich and fascinating history of Japan from ancient times to the modern era.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #FFB7C5;
+            --secondary-color: #F8F4F8;
+            --accent-color: #FFE4E1;
+            --text-primary: #2C2C2C;
+            --text-secondary: #6B6B6B;
+            --white: #FFFFFF;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--white) 100%);
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-container {
+            position: relative;
+            margin: 4rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 4rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.02);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+            margin-right: 55%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border: 4px solid var(--white);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .timeline-item.active .timeline-marker {
+            background: var(--text-primary);
+            transform: translateX(-50%) scale(1.3);
+        }
+
+        .timeline-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-content {
+            box-shadow: 0 8px 25px rgba(255, 183, 197, 0.2);
+        }
+
+        .timeline-period {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-years {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Timeline Detail Panel */
+        .timeline-detail {
+            background: var(--secondary-color);
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .detail-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .detail-content {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Historical Figures */
+        .figures-section {
+            padding: 4rem 0;
+            background: var(--secondary-color);
+        }
+
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .figure-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .figure-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .figure-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .figure-title {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .figure-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Cultural Achievements */
+        .achievements-section {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .achievement-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--secondary-color);
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .achievement-item:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-description {
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-up.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .timeline-line {
+                left: 20px;
+            }
+            
+            .timeline-marker {
+                left: 20px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 50px;
+                margin-right: 0;
+                text-align: left;
+            }
+            
+            .timeline-detail {
+                padding: 2rem;
+            }
+            
+            .figures-grid,
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">日本文化</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="traditions.html" class="nav-link">Traditions</a></li>
+                <li><a href="art.html" class="nav-link">Art</a></li>
+                <li><a href="travel.html" class="nav-link">Travel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-splitting>Japanese History</h1>
+            <p class="hero-subtitle">Journey through millennia of cultural evolution, from ancient traditions to modern innovations</p>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Historical Timeline</h2>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item fade-in-up" data-period="jomon">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-period">Jomon Period</div>
+                        <div class="timeline-years">14,000 - 300 BCE</div>
+                        <div class="timeline-title">Ancient Foundations</div>
+                        <div class="timeline-description">
+                            Japan's earliest civilization emerged with distinctive pottery culture, hunter-gatherer societies, 
+                            and the beginning of agricultural practices that would shape the archipelago.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up" data-period="yamato">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-period">Yamato Period</div>
+                        <div class="timeline-years">250 - 710 CE</div>
+                        <div class="timeline-title">Imperial Unification</div>
+                        <div class="timeline-description">
+                            The emergence of the Japanese imperial system, introduction of Buddhism, and the establishment 
+                            of centralized government under imperial rule.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up" data-period="heian">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-period">Heian Period</div>
+                        <div class="timeline-years">794 - 1185 CE</div>
+                        <div class="timeline-title">Cultural Golden Age</div>
+                        <div class="timeline-description">
+                            The pinnacle of classical Japanese culture, marked by the development of native literature, 
+                            art, and the refinement of aesthetic principles that define Japanese culture today.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up" data-period="kamakura">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-period">Kamakura Period</div>
+                        <div class="timeline-years">1185 - 1333 CE</div>
+                        <div class="timeline-title">Samurai Rise</div>
+                        <div class="timeline-description">
+                            The establishment of the first shogunate, rise of the samurai class, and the development 
+                            of distinctively Japanese forms of Buddhism and military culture.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up" data-period="edo">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-period">Edo Period</div>
+                        <div class="timeline-years">1603 - 1868 CE</div>
+                        <div class="timeline-title">Isolation & Flourishing</div>
+                        <div class="timeline-description">
+                            A period of national isolation that paradoxically led to unprecedented cultural development, 
+                            urbanization, and the creation of many art forms recognized as quintessentially Japanese.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up" data-period="modern">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-period">Modern Era</div>
+                        <div class="timeline-years">1868 - Present</div>
+                        <div class="timeline-title">Transformation & Innovation</div>
+                        <div class="timeline-description">
+                            From the Meiji Restoration through post-war reconstruction to becoming a global economic 
+                            power while preserving traditional cultural values.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Detail Panel -->
+            <div class="timeline-detail" id="timeline-detail">
+                <h3 class="detail-title">Explore Japan's Historical Periods</h3>
+                <p class="detail-content">
+                    Click on any period in the timeline above to learn more about the significant events, 
+                    cultural developments, and historical figures that shaped each era of Japanese history.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historical Figures -->
+    <section class="figures-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Influential Figures</h2>
+            <p class="fade-in-up" style="text-align: center; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+                Meet the remarkable individuals who shaped Japanese history through their wisdom, artistry, and leadership.
+            </p>
+
+            <div class="figures-grid">
+                <div class="figure-card fade-in-up">
+                    <div class="figure-name">Prince Shōtoku</div>
+                    <div class="figure-title">574-622 CE</div>
+                    <div class="figure-description">
+                        Founder of Japanese Buddhism and creator of the Twelve-Level Cap and Rank System. 
+                        He established the constitutional framework for imperial Japan and promoted cultural exchange with China.
+                    </div>
+                </div>
+
+                <div class="figure-card fade-in-up">
+                    <div class="figure-name">Murasaki Shikibu</div>
+                    <div class="figure-title">973-1025 CE</div>
+                    <div class="figure-description">
+                        Author of "The Tale of Genji," the world's first novel. A lady-in-waiting at the Heian court, 
+                        she created literary masterpieces that capture the essence of classical Japanese culture.
+                    </div>
+                </div>
+
+                <div class="figure-card fade-in-up">
+                    <div class="figure-name">Minamoto no Yoritomo</div>
+                    <div class="figure-title">1147-1199 CE</div>
+                    <div class="figure-description">
+                        Founder of the Kamakura shogunate and the first shogun of Japan. He established the military 
+                        government system that would define Japanese politics for centuries.
+                    </div>
+                </div>
+
+                <div class="figure-card fade-in-up">
+                    <div class="figure-name">Sen no Rikyū</div>
+                    <div class="figure-title">1522-1591 CE</div>
+                    <div class="figure-description">
+                        Master of the Japanese tea ceremony who perfected the wabi-sabi aesthetic. His philosophy 
+                        of simplicity and mindfulness continues to influence Japanese culture today.
+                    </div>
+                </div>
+
+                <div class="figure-card fade-in-up">
+                    <div class="figure-name">Emperor Meiji</div>
+                    <div class="figure-title">1852-1912 CE</div>
+                    <div class="figure-description">
+                        The emperor who led Japan's transformation from feudal society to modern nation. 
+                        His reign marked the beginning of Japan's emergence as a world power.
+                    </div>
+                </div>
+
+                <div class="figure-card fade-in-up">
+                    <div class="figure-name">Yoshida Shōin</div>
+                    <div class="figure-title">1830-1859 CE</div>
+                    <div class="figure-description">
+                        Revolutionary intellectual and teacher who inspired the Meiji Restoration. His progressive 
+                        ideas about education and modernization helped shape modern Japan.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Achievements -->
+    <section class="achievements-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Cultural Achievements</h2>
+            <p class="fade-in-up" style="text-align: center; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+                Discover the remarkable innovations and cultural developments that emerged from each historical period.
+            </p>
+
+            <div class="achievements-grid">
+                <div class="achievement-item fade-in-up">
+                    <div class="achievement-icon">🏛️</div>
+                    <div class="achievement-title">Architectural Mastery</div>
+                    <div class="achievement-description">
+                        From ancient shrines to modern buildings, Japanese architecture emphasizes harmony 
+                        with nature and sophisticated engineering principles.
+                    </div>
+                </div>
+
+                <div class="achievement-item fade-in-up">
+                    <div class="achievement-icon">🎨</div>
+                    <div class="achievement-title">Artistic Innovation</div>
+                    <div class="achievement-description">
+                        Unique art forms including ukiyo-e, calligraphy, pottery, and textile arts that 
+                        have influenced global aesthetic sensibilities.
+                    </div>
+                </div>
+
+                <div class="achievement-item fade-in-up">
+                    <div class="achievement-icon">📚</div>
+                    <div class="achievement-title">Literary Excellence</div>
+                    <div class="achievement-description">
+                        From the world's first novel to haiku poetry, Japanese literature has created 
+                        enduring forms of artistic expression and storytelling.
+                    </div>
+                </div>
+
+                <div class="achievement-item fade-in-up">
+                    <div class="achievement-icon">⚔️</div>
+                    <div class="achievement-title">Martial Traditions</div>
+                    <div class="achievement-description">
+                        Sophisticated martial arts and military strategies that emphasize discipline, 
+                        honor, and spiritual development alongside physical skills.
+                    </div>
+                </div>
+
+                <div class="achievement-item fade-in-up">
+                    <div class="achievement-icon">🍵</div>
+                    <div class="achievement-title">Cultural Ceremonies</div>
+                    <div class="achievement-description">
+                        Refined ceremonial practices like the tea ceremony that embody philosophical 
+                        principles and aesthetic ideals.
+                    </div>
+                </div>
+
+                <div class="achievement-item fade-in-up">
+                    <div class="achievement-icon">🌸</div>
+                    <div class="achievement-title">Aesthetic Philosophy</div>
+                    <div class="achievement-description">
+                        Profound concepts like wabi-sabi and ma that have shaped not only Japanese culture 
+                        but global understanding of beauty and meaning.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Japanese Culture Heritage. Created with respect and appreciation for Japanese traditions.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        // Timeline interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const detailPanel = document.getElementById('timeline-detail');
+            
+            const periodData = {
+                jomon: {
+                    title: 'Jomon Period (14,000 - 300 BCE)',
+                    content: 'The Jomon period represents Japan\'s earliest civilization, characterized by its distinctive cord-marked pottery (Jomon means "cord pattern"). During this extensive period, hunter-gatherer societies developed sophisticated tools, established permanent settlements, and created the foundation for agricultural practices. The Jomon people lived in harmony with nature, developing sustainable practices and artistic expressions that would influence Japanese culture for millennia.'
+                },
+                yamato: {
+                    title: 'Yamato Period (250 - 710 CE)',
+                    content: 'The Yamato period marked the emergence of the Japanese imperial system and the unification of the archipelago under imperial rule. This era saw the introduction of Buddhism from Korea and China, the development of a centralized government system, and the creation of Japan\'s first constitution. The period established many institutions that would define Japanese civilization, including the imperial line that continues to this day.'
+                },
+                heian: {
+                    title: 'Heian Period (794 - 1185 CE)',
+                    content: 'Considered the golden age of classical Japanese culture, the Heian period saw the development of distinctly Japanese art, literature, and aesthetic principles. The imperial court in Kyoto became a center of refined culture, producing masterpieces like "The Tale of Genji" and establishing aesthetic concepts that continue to influence Japanese culture. This period saw the flourishing of native Japanese traditions free from excessive Chinese influence.'
+                },
+                kamakura: {
+                    title: 'Kamakura Period (1185 - 1333 CE)',
+                    content: 'The Kamakura period marked the rise of the samurai class and the establishment of Japan\'s first military government (shogunate). This era saw the development of distinctively Japanese forms of Buddhism, including Zen Buddhism, and the creation of a unique warrior culture. The period established the dual imperial-military government system that would characterize Japanese politics for centuries.'
+                },
+                edo: {
+                    title: 'Edo Period (1603 - 1868 CE)',
+                    content: 'The Edo period was characterized by national isolation (sakoku) that paradoxically led to unprecedented cultural development. With peace established under the Tokugawa shogunate, Japan experienced urbanization, economic growth, and the flourishing of popular culture. This period saw the development of many art forms now considered quintessentially Japanese, including ukiyo-e, kabuki theater, and the refinement of the tea ceremony.'
+                },
+                modern: {
+                    title: 'Modern Era (1868 - Present)',
+                    content: 'The modern era began with the Meiji Restoration, which transformed Japan from a feudal society into a modern industrial nation. Japan rapidly adopted Western technology and institutions while working to preserve traditional cultural values. The post-war period saw Japan emerge as a global economic power, and today the country continues to balance modernization with the preservation of its rich cultural heritage.'
+                }
+            };
+            
+            timelineItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    timelineItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Update detail panel
+                    const period = this.dataset.period;
+                    const data = periodData[period];
+                    
+                    detailPanel.innerHTML = `
+                        <h3 class="detail-title">${data.title}</h3>
+                        <p class="detail-content">${data.content}</p>
+                    `;
+                    
+                    // Scroll to detail panel
+                    detailPanel.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+        
+        // Initialize text splitting for animations
+        Splitting();
+    </script>
+</body>
+</html>

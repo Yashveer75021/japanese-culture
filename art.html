@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Art - 日本の芸術</title>
+    <meta name="description" content="Explore the refined aesthetics and artistic traditions of Japan through various art forms.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #FFB7C5;
+            --secondary-color: #F8F4F8;
+            --accent-color: #FFE4E1;
+            --text-primary: #2C2C2C;
+            --text-secondary: #6B6B6B;
+            --white: #FFFFFF;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--white) 100%);
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Calligraphy Section */
+        .calligraphy-section {
+            background: var(--secondary-color);
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .calligraphy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .calligraphy-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .calligraphy-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .calligraphy-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .calligraphy-elements {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .element-item {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .element-item h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Art Forms Grid */
+        .art-forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .art-form-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .art-form-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .art-form-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .art-form-content {
+            padding: 1.5rem;
+        }
+
+        .art-form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .art-form-period {
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .art-form-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .art-form-technique {
+            background: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            background: var(--secondary-color);
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-artist {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Aesthetic Principles */
+        .principles-section {
+            padding: 4rem 0;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .principle-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .principle-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .principle-term {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .principle-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .principle-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Interactive Elements */
+        .interactive-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .art-quiz {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .quiz-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: var(--secondary-color);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .quiz-option:hover {
+            background: var(--accent-color);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.selected {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-result {
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-up.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-left.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-right.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .calligraphy-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .calligraphy-elements {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .art-forms-grid,
+            .gallery-grid,
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">日本文化</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="traditions.html" class="nav-link">Traditions</a></li>
+                <li><a href="art.html" class="nav-link">Art</a></li>
+                <li><a href="travel.html" class="nav-link">Travel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-splitting>Japanese Art</h1>
+            <p class="hero-subtitle">Experience the refined aesthetics and timeless beauty of Japanese artistic expression</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Calligraphy Section -->
+            <section class="calligraphy-section">
+                <div class="container">
+                    <div class="calligraphy-content">
+                        <div class="fade-in-left">
+                            <img src="resources/calligraphy-example.jpg" alt="Japanese Calligraphy" class="calligraphy-image">
+                        </div>
+                        <div class="calligraphy-text fade-in-right">
+                            <h3>書道 (Shodō) - The Way of Writing</h3>
+                            <p>
+                                Japanese calligraphy is more than beautiful writing—it is a spiritual practice that 
+                                embodies the artist's character and inner state. Each brushstroke carries meaning, 
+                                emotion, and the artist's life force, creating a direct expression of the soul.
+                            </p>
+                            <p>
+                                Rooted in Chinese traditions but uniquely developed in Japan, shodō became closely 
+                                connected with Zen Buddhism, emphasizing mindfulness, spontaneity, and the beauty 
+                                found in imperfection and natural expression.
+                            </p>
+                            
+                            <div class="calligraphy-elements">
+                                <div class="element-item">
+                                    <h4>筆 (Fude)</h4>
+                                    <p>The brush as extension of the artist</p>
+                                </div>
+                                <div class="element-item">
+                                    <h4>墨 (Sumi)</h4>
+                                    <p>Black ink representing infinite depth</p>
+                                </div>
+                                <div class="element-item">
+                                    <h4>紙 (Kami)</h4>
+                                    <p>Paper as receptive surface</p>
+                                </div>
+                                <div class="element-item">
+                                    <h4>心 (Kokoro)</h4>
+                                    <p>The heart/mind behind each stroke</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Art Forms Section -->
+            <section class="section">
+                <h2 class="section-title fade-in-up">Traditional Art Forms</h2>
+                <p class="section-subtitle fade-in-up">
+                    Discover the diverse artistic traditions that have shaped Japanese culture, each reflecting 
+                    deep philosophical principles and refined aesthetic sensibilities.
+                </p>
+
+                <div class="art-forms-grid">
+                    <div class="art-form-card fade-in-up">
+                        <img src="resources/pottery-collection.jpg" alt="Japanese Pottery" class="art-form-image">
+                        <div class="art-form-content">
+                            <div class="art-form-title">陶芸 (Tōgei) - Pottery</div>
+                            <div class="art-form-period">Jomon Period to Present</div>
+                            <div class="art-form-description">
+                                Japanese pottery represents one of the world's oldest and most refined ceramic traditions. 
+                                From ancient Jomon vessels to modern studio pottery, each piece embodies the Japanese 
+                                aesthetic of finding beauty in simplicity and natural imperfection.
+                            </div>
+                            <div class="art-form-technique">
+                                <strong>Famous Styles:</strong> Raku, Shino, Bizen, and Hagi ware, each with distinct 
+                                firing techniques and aesthetic philosophies.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="art-form-card fade-in-up">
+                        <img src="resources/zen-garden.jpg" alt="Japanese Garden" class="art-form-image">
+                        <div class="art-form-content">
+                            <div class="art-form-title">庭園 (Teien) - Garden Design</div>
+                            <div class="art-form-period">Heian Period to Present</div>
+                            <div class="art-form-description">
+                                Japanese gardens are living artworks that create miniature idealized landscapes. 
+                                Through careful arrangement of rocks, water, plants, and architectural elements, 
+                                these spaces provide contemplative environments for meditation and reflection.
+                            </div>
+                            <div class="art-form-technique">
+                                <strong>Styles:</strong> Zen rock gardens, tea gardens, stroll gardens, and pond gardens, 
+                                each serving different aesthetic and spiritual purposes.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="art-form-card fade-in-up">
+                        <img src="resources/temple-kyoto.jpg" alt="Japanese Architecture" class="art-form-image">
+                        <div class="art-form-content">
+                            <div class="art-form-title">建築 (Kenchiku) - Architecture</div>
+                            <div class="art-form-period">Ancient to Present</div>
+                            <div class="art-form-description">
+                                Japanese architecture emphasizes harmony with nature, flexible spaces, and the beauty 
+                                of natural materials. Traditional buildings demonstrate sophisticated engineering 
+                                while maintaining aesthetic simplicity and spiritual resonance.
+                            </div>
+                            <div class="art-form-technique">
+                                <strong>Features:</strong> Post-and-beam construction, sliding partitions, tatami mats, 
+                                and integration of garden views into architectural design.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="art-form-card fade-in-up">
+                        <img src="resources/bamboo-forest.jpg" alt="Japanese Textiles" class="art-form-image">
+                        <div class="art-form-content">
+                            <div class="art-form-title">織物 (Ori mono) - Textiles</div>
+                            <div class="art-form-period">Ancient to Present</div>
+                            <div class="art-form-description">
+                                Japanese textile arts combine technical mastery with artistic expression, creating 
+                                fabrics that are both functional and beautiful. From silk kimonos to indigo-dyed 
+                                cotton, each textile tells a story of regional identity and cultural values.
+                            </div>
+                            <div class="art-form-technique">
+                                <strong>Techniques:</strong> Silk weaving, indigo dyeing, shibori resist dyeing, 
+                                and intricate embroidery patterns.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="art-form-card fade-in-up">
+                        <img src="resources/tea-house.jpg" alt="Japanese Woodworking" class="art-form-image">
+                        <div class="art-form-content">
+                            <div class="art-form-title">木工 (Mokkō) - Woodworking</div>
+                            <div class="art-form-period">Ancient to Present</div>
+                            <div class="art-form-description">
+                                Japanese woodworking demonstrates extraordinary precision and respect for natural 
+                                materials. Traditional joinery techniques create structures without nails or glue, 
+                                while lacquerware provides both protection and artistic beauty.
+                            </div>
+                            <div class="art-form-technique">
+                                <strong>Methods:</strong> Complex joinery systems, natural lacquer application, 
+                                and the preservation of wood's natural beauty and grain patterns.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="art-form-card fade-in-up">
+                        <img src="resources/calligraphy-example.jpg" alt="Japanese Painting" class="art-form-image">
+                        <div class="art-form-content">
+                            <div class="art-form-title">絵画 (Kaiga) - Painting</div>
+                            <div class="art-form-period">Ancient to Present</div>
+                            <div class="art-form-description">
+                                Japanese painting encompasses diverse styles from Buddhist religious art to 
+                                secular landscapes and portraits. Traditional techniques emphasize the beauty 
+                                of empty space and the expressive power of minimal brushstrokes.
+                            </div>
+                            <div class="art-form-technique">
+                                <strong>Styles:</strong> Yamato-e narrative scrolls, ink wash landscapes, 
+                                and the distinctive ukiyo-e woodblock prints.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section class="gallery-section">
+                <div class="container">
+                    <h2 class="section-title fade-in-up">Art Gallery</h2>
+                    <p class="section-subtitle fade-in-up">
+                        Explore masterpieces from different periods and styles of Japanese art, 
+                        each representing the pinnacle of artistic achievement in its form.
+                    </p>
+
+                    <div class="gallery-grid">
+                        <div class="gallery-item fade-in-up" onclick="openLightbox('resources/pottery-collection.jpg', 'Ancient Pottery Collection', 'Jomon Period')">
+                            <img src="resources/pottery-collection.jpg" alt="Ancient Pottery" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <div>
+                                    <div class="gallery-title">Ancient Pottery Collection</div>
+                                    <div class="gallery-artist">Jomon Period</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gallery-item fade-in-up" onclick="openLightbox('resources/calligraphy-example.jpg', 'Zen Calligraphy', 'Muromachi Period')">
+                            <img src="resources/calligraphy-example.jpg" alt="Zen Calligraphy" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <div>
+                                    <div class="gallery-title">Zen Calligraphy</div>
+                                    <div class="gallery-artist">Muromachi Period</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gallery-item fade-in-up" onclick="openLightbox('resources/zen-garden.jpg', 'Garden Design', 'Modern Interpretation')">
+                            <img src="resources/zen-garden.jpg" alt="Garden Design" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <div>
+                                    <div class="gallery-title">Garden Design</div>
+                                    <div class="gallery-artist">Modern Interpretation</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gallery-item fade-in-up" onclick="openLightbox('resources/temple-kyoto.jpg', 'Architectural Detail', 'Heian Period')">
+                            <img src="resources/temple-kyoto.jpg" alt="Temple Architecture" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <div>
+                                    <div class="gallery-title">Architectural Detail</div>
+                                    <div class="gallery-artist">Heian Period</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gallery-item fade-in-up" onclick="openLightbox('resources/tea-house.jpg', 'Tea House Design', 'Edo Period Style')">
+                            <img src="resources/tea-house.jpg" alt="Tea House" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <div>
+                                    <div class="gallery-title">Tea House Design</div>
+                                    <div class="gallery-artist">Edo Period Style</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gallery-item fade-in-up" onclick="openLightbox('resources/bamboo-forest.jpg', 'Natural Inspiration', 'Traditional Motif')">
+                            <img src="resources/bamboo-forest.jpg" alt="Natural Art" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <div>
+                                    <div class="gallery-title">Natural Inspiration</div>
+                                    <div class="gallery-artist">Traditional Motif</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Aesthetic Principles -->
+            <section class="principles-section">
+                <h2 class="section-title fade-in-up">Aesthetic Principles</h2>
+                <p class="section-subtitle fade-in-up">
+                    These guiding philosophies shape all forms of Japanese art, creating a cohesive aesthetic 
+                    that values simplicity, naturalness, and the beauty found in imperfection.
+                </p>
+
+                <div class="principles-grid">
+                    <div class="principle-card fade-in-up">
+                        <div class="principle-term">簡素 (Kanso)</div>
+                        <div class="principle-title">Simplicity</div>
+                        <div class="principle-description">
+                            The elimination of clutter and the focus on essential elements. Kanso emphasizes 
+                            that true beauty lies not in ornamentation but in the purity of form and the 
+                            careful selection of what is necessary and meaningful.
+                        </div>
+                    </div>
+
+                    <div class="principle-card fade-in-up">
+                        <div class="principle-term">自然 (Shizen)</div>
+                        <div class="principle-title">Naturalness</div>
+                        <div class="principle-description">
+                            The absence of artificiality and the embrace of natural forms and processes. 
+                            Shizen values materials in their natural state and designs that work with, 
+                            rather than against, the inherent qualities of nature.
+                        </div>
+                    </div>
+
+                    <div class="principle-card fade-in-up">
+                        <div class="principle-term">不均整 (Fukinsei)</div>
+                        <div class="principle-title">Asymmetry</div>
+                        <div class="principle-description">
+                            The use of irregular and unbalanced compositions that create visual interest 
+                            and reflect the natural asymmetry found in the world. Fukinsei suggests that 
+                            perfection lies in imperfection and that balance can be found in imbalance.
+                        </div>
+                    </div>
+
+                    <div class="principle-card fade-in-up">
+                        <div class="principle-term">幽玄 (Yūgen)</div>
+                        <div class="principle-title">Subtle Profundity</div>
+                        <div class="principle-description">
+                            The suggestion of deep meaning that lies beneath the surface. Yūgen creates 
+                            beauty through understatement and suggestion, allowing viewers to discover 
+                            hidden depths through contemplation and imagination.
+                        </div>
+                    </div>
+
+                    <div class="principle-card fade-in-up">
+                        <div class="principle-term">脱俗 (Datsuzoku)</div>
+                        <div class="principle-title">Freedom from Convention</div>
+                        <div class="principle-description">
+                            The transcendence of traditional patterns and the creation of new forms of 
+                            expression. Datsuzoku values creativity and innovation while remaining 
+                            grounded in fundamental aesthetic principles and spiritual truth.
+                        </div>
+                    </div>
+
+                    <div class="principle-card fade-in-up">
+                        <div class="principle-term">静寂 (Seijaku)</div>
+                        <div class="principle-title">Tranquility</div>
+                        <div class="principle-description">
+                            The sense of calm and serenity that pervades Japanese art. Seijaku creates 
+                            spaces for contemplation and reflection, allowing the mind to find peace 
+                            and the spirit to find rest in the presence of beauty.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Art Quiz -->
+            <section class="interactive-section">
+                <div class="container">
+                    <div class="art-quiz fade-in-up">
+                        <h3 class="quiz-title">Test Your Knowledge</h3>
+                        <div class="quiz-question" id="quiz-question">
+                            Which aesthetic principle emphasizes finding beauty in imperfection and impermanence?
+                        </div>
+                        
+                        <div class="quiz-options" id="quiz-options">
+                            <div class="quiz-option" data-answer="correct">Wabi-Sabi</div>
+                            <div class="quiz-option" data-answer="incorrect">Kanso</div>
+                            <div class="quiz-option" data-answer="incorrect">Ma</div>
+                            <div class="quiz-option" data-answer="incorrect">Shizen</div>
+                        </div>
+                        
+                        <button class="generate-btn" onclick="nextQuestion()" style="display: none;" id="next-btn">Next Question</button>
+                        
+                        <div class="quiz-result" id="quiz-result">
+                            <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Correct!</h4>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">
+                                Wabi-sabi is indeed the aesthetic principle that finds beauty in imperfection, 
+                                impermanence, and incompleteness. It celebrates the modest, humble, and authentic, 
+                                embracing the natural cycle of growth, decay, and renewal.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Japanese Culture Heritage. Created with respect and appreciation for Japanese traditions.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        // Quiz functionality
+        const quizQuestions = [
+            {
+                question: "Which aesthetic principle emphasizes finding beauty in imperfection and impermanence?",
+                options: ["Wabi-Sabi", "Kanso", "Ma", "Shizen"],
+                correct: 0,
+                explanation: "Wabi-sabi is indeed the aesthetic principle that finds beauty in imperfection, impermanence, and incompleteness. It celebrates the modest, humble, and authentic, embracing the natural cycle of growth, decay, and renewal."
+            },
+            {
+                question: "What does the term 'Ma' represent in Japanese aesthetics?",
+                options: ["Natural beauty", "Negative space", "Perfect balance", "Bold colors"],
+                correct: 1,
+                explanation: "Ma represents the power of negative space and meaningful pause. It emphasizes the deliberate use of emptiness to create balance, give meaning to form, and provide space for contemplation."
+            },
+            {
+                question: "Which art form is considered 'The Way of Writing'?",
+                options: ["Ukiyo-e", "Shodō", "Ikebana", "Origami"],
+                correct: 1,
+                explanation: "Shodō (書道) literally means 'The Way of Writing' and represents Japanese calligraphy as a spiritual practice where each brushstroke carries meaning and emotion."
+            },
+            {
+                question: "What is the primary focus of Japanese garden design?",
+                options: ["Perfect symmetry", "Maximum plant variety", "Natural harmony", "Bright colors"],
+                correct: 2,
+                explanation: "Japanese garden design emphasizes natural harmony, creating miniature idealized landscapes that provide contemplative environments for meditation and reflection."
+            }
+        ];
+        
+        let currentQuestion = 0;
+        
+        function nextQuestion() {
+            currentQuestion = (currentQuestion + 1) % quizQuestions.length;
+            loadQuestion();
+        }
+        
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestion];
+            document.getElementById('quiz-question').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'quiz-option';
+                optionDiv.textContent = option;
+                optionDiv.dataset.answer = index === question.correct ? 'correct' : 'incorrect';
+                optionDiv.onclick = () => checkAnswer(index, question.correct, question.explanation);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            document.getElementById('quiz-result').classList.remove('show');
+            document.getElementById('next-btn').style.display = 'none';
+        }
+        
+        function checkAnswer(selected, correct, explanation) {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('selected');
+                } else {
+                    option.style.opacity = '0.5';
+                }
+                option.onclick = null; // Disable further clicks
+            });
+            
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.innerHTML = `
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;">${selected === correct ? 'Correct!' : 'Not quite right.'}</h4>
+                <p style="color: var(--text-secondary); line-height: 1.6;">${explanation}</p>
+            `;
+            resultDiv.classList.add('show');
+            
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+        
+        // Lightbox functionality
+        function openLightbox(imageSrc, title, artist) {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox-overlay';
+            lightbox.innerHTML = `
+                <div class="lightbox-content">
+                    <img src="${imageSrc}" alt="${title}" class="lightbox-image">
+                    <div style="position: absolute; bottom: -60px; left: 0; right: 0; color: white; text-align: center;">
+                        <h3 style="margin-bottom: 0.5rem;">${title}</h3>
+                        <p style="opacity: 0.8;">${artist}</p>
+                    </div>
+                    <button class="lightbox-close">&times;</button>
+                </div>
+            `;
+
+            document.body.appendChild(lightbox);
+            
+            // Close lightbox
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+                    document.body.removeChild(lightbox);
+                }
+            });
+        }
+        
+        // Initialize text splitting for animations
+        Splitting();
+    </script>
+</body>
+</html>

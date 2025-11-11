@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Traditions - 日本の伝統</title>
+    <meta name="description" content="Explore the beautiful traditions and customs that define Japanese culture and way of life.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #FFB7C5;
+            --secondary-color: #F8F4F8;
+            --accent-color: #FFE4E1;
+            --text-primary: #2C2C2C;
+            --text-secondary: #6B6B6B;
+            --white: #FFFFFF;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--white) 100%);
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Tea Ceremony Section */
+        .tea-ceremony {
+            background: var(--secondary-color);
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .tea-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tea-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .tea-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tea-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .tea-principles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .principle-item {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .principle-item h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .principle-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Festivals Section */
+        .festivals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .festival-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .festival-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .festival-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .festival-content {
+            padding: 1.5rem;
+        }
+
+        .festival-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .festival-season {
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .festival-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .festival-significance {
+            background: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Customs Section */
+        .customs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .custom-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .custom-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .custom-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .custom-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .custom-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Philosophy Section */
+        .philosophy-section {
+            background: var(--secondary-color);
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .philosophy-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .philosophy-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .philosophy-term {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .philosophy-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .philosophy-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Interactive Elements */
+        .interactive-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .seasonal-calendar {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .calendar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .seasons-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .season-item {
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .season-item:hover,
+        .season-item.active {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .season-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .season-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-up.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-left.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-right.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .tea-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .tea-principles {
+                grid-template-columns: 1fr;
+            }
+            
+            .seasons-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .festivals-grid,
+            .customs-grid,
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">日本文化</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="traditions.html" class="nav-link">Traditions</a></li>
+                <li><a href="art.html" class="nav-link">Art</a></li>
+                <li><a href="travel.html" class="nav-link">Travel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-splitting>Japanese Traditions</h1>
+            <p class="hero-subtitle">Discover the timeless customs and ceremonies that embody the soul of Japan</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Tea Ceremony Section -->
+            <section class="tea-ceremony">
+                <div class="container">
+                    <div class="tea-content">
+                        <div class="fade-in-left">
+                            <img src="resources/tea-house.jpg" alt="Japanese Tea Ceremony" class="tea-image">
+                        </div>
+                        <div class="tea-text fade-in-right">
+                            <h3>茶道 (Chadō) - The Way of Tea</h3>
+                            <p>
+                                The Japanese tea ceremony is far more than preparing and drinking tea—it is a spiritual 
+                                discipline that embodies harmony, respect, purity, and tranquility. Every movement is 
+                                deliberate, every gesture meaningful, creating a meditative experience that transcends 
+                                the simple act of tea preparation.
+                            </p>
+                            <p>
+                                Rooted in Zen Buddhism and refined by master Sen no Rikyū in the 16th century, the 
+                                tea ceremony represents the pinnacle of Japanese aesthetic philosophy, emphasizing 
+                                simplicity, naturalness, and the beauty found in imperfection.
+                            </p>
+                            
+                            <div class="tea-principles">
+                                <div class="principle-item">
+                                    <h4>和 (Wa)</h4>
+                                    <p>Harmony between host and guests</p>
+                                </div>
+                                <div class="principle-item">
+                                    <h4>敬 (Kei)</h4>
+                                    <p>Respect for all participants</p>
+                                </div>
+                                <div class="principle-item">
+                                    <h4>清 (Sei)</h4>
+                                    <p>Purity of mind and spirit</p>
+                                </div>
+                                <div class="principle-item">
+                                    <h4>寂 (Jaku)</h4>
+                                    <p>Tranquility and inner peace</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Festivals Section -->
+            <section class="section">
+                <h2 class="section-title fade-in-up">Seasonal Festivals</h2>
+                <p class="section-subtitle fade-in-up">
+                    Japan's festivals celebrate the changing seasons, honoring nature's cycles and expressing gratitude 
+                    for life's blessings through vibrant community celebrations.
+                </p>
+
+                <div class="festivals-grid">
+                    <div class="festival-card fade-in-up">
+                        <img src="resources/zen-garden.jpg" alt="Cherry Blossom Festival" class="festival-image">
+                        <div class="festival-content">
+                            <div class="festival-title">花見 (Hanami)</div>
+                            <div class="festival-season">Spring - March to May</div>
+                            <div class="festival-description">
+                                The beloved cherry blossom viewing tradition where families and friends gather under 
+                                blooming sakura trees to celebrate the fleeting beauty of spring and the transient 
+                                nature of life.
+                            </div>
+                            <div class="festival-significance">
+                                <strong>Philosophy:</strong> Hanami embodies mono no aware - the awareness of the 
+                                impermanence of all things and a gentle sadness at their passing.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="festival-card fade-in-up">
+                        <img src="resources/bamboo-forest.jpg" alt="Summer Festival" class="festival-image">
+                        <div class="festival-content">
+                            <div class="festival-title">夏祭り (Natsumatsuri)</div>
+                            <div class="festival-season">Summer - July to August</div>
+                            <div class="festival-description">
+                                Vibrant summer festivals featuring traditional music, dance, fireworks, and street food. 
+                                These celebrations honor local deities and community spirits with colorful processions.
+                            </div>
+                            <div class="festival-significance">
+                                <strong>Tradition:</strong> Summer festivals strengthen community bonds and preserve 
+                                local cultural identities through shared celebration and traditional arts.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="festival-card fade-in-up">
+                        <img src="resources/temple-kyoto.jpg" alt="Autumn Festival" class="festival-image">
+                        <div class="festival-content">
+                            <div class="festival-title">紅葉狩り (Momijigari)</div>
+                            <div class="festival-season">Autumn - October to November</div>
+                            <div class="festival-description">
+                                The tradition of autumn leaf viewing, where people journey to mountains and temples 
+                                to appreciate the brilliant crimson and gold colors of changing maple leaves.
+                            </div>
+                            <div class="festival-significance">
+                                <strong>Aesthetic:</strong> Momijigari celebrates the beauty of transformation and 
+                                the cyclical nature of life, death, and renewal in the natural world.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="festival-card fade-in-up">
+                        <img src="resources/tea-house.jpg" alt="New Year Festival" class="festival-image">
+                        <div class="festival-content">
+                            <div class="festival-title">お正月 (Oshōgatsu)</div>
+                            <div class="festival-season">Winter - January 1-3</div>
+                            <div class="festival-description">
+                                Japan's most important holiday, celebrating the New Year with family gatherings, 
+                                traditional foods, shrine visits, and the exchange of New Year's greetings.
+                            </div>
+                            <div class="festival-significance">
+                                <strong>Meaning:</strong> Oshōgatsu represents renewal, gratitude for the past year, 
+                                and hope for the future, emphasizing family unity and spiritual purification.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Customs Section -->
+            <section class="section">
+                <h2 class="section-title fade-in-up">Cultural Customs</h2>
+                <p class="section-subtitle fade-in-up">
+                    These daily practices and social etiquettes reflect deep philosophical principles and demonstrate 
+                    the Japanese values of respect, harmony, and mindful living.
+                </p>
+
+                <div class="customs-grid">
+                    <div class="custom-item fade-in-up">
+                        <div class="custom-icon">🙏</div>
+                        <div class="custom-title">お辞儀 (Ojigi)</div>
+                        <div class="custom-description">
+                            The art of bowing, with different depths and durations conveying different levels of respect. 
+                            This gesture embodies humility and acknowledges the interconnectedness of all beings.
+                        </div>
+                    </div>
+
+                    <div class="custom-item fade-in-up">
+                        <div class="custom-icon">👟</div>
+                        <div class="custom-title">靴を脱ぐ (Kutsu wo Nugu)</div>
+                        <div class="custom-description">
+                            The practice of removing shoes before entering homes and certain buildings, symbolizing 
+                            the separation of the outside world from the sacred interior space.
+                        </div>
+                    </div>
+
+                    <div class="custom-item fade-in-up">
+                        <div class="custom-icon">🎁</div>
+                        <div class="custom-title">贈り物 (Okurimono)</div>
+                        <div class="custom-description">
+                            The thoughtful art of gift-giving, where the wrapping and presentation are as important 
+                            as the gift itself, expressing gratitude and strengthening social bonds.
+                        </div>
+                    </div>
+
+                    <div class="custom-item fade-in-up">
+                        <div class="custom-icon">🍽️</div>
+                        <div class="custom-title">いただきます (Itadakimasu)</div>
+                        <div class="custom-description">
+                            The phrase said before eating, expressing gratitude for the food, the people who prepared it, 
+                            and all the beings and elements that contributed to the meal.
+                        </div>
+                    </div>
+
+                    <div class="custom-item fade-in-up">
+                        <div class="custom-icon">🌸</div>
+                        <div class="custom-title">花活け (Ikebana)</div>
+                        <div class="custom-description">
+                            The meditative art of flower arrangement, where each placement is deliberate and meaningful, 
+                            creating harmony between nature and human creativity.
+                        </div>
+                    </div>
+
+                    <div class="custom-item fade-in-up">
+                        <div class="custom-icon">🏠</div>
+                        <div class="custom-title">もてなし (Omotenashi)</div>
+                        <div class="custom-description">
+                            The philosophy of selfless service and hospitality, anticipating guests' needs before 
+                            they are expressed and creating an atmosphere of genuine welcome.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Philosophy Section -->
+            <section class="philosophy-section">
+                <div class="container">
+                    <h2 class="section-title fade-in-up">Philosophical Foundations</h2>
+                    <p class="section-subtitle fade-in-up">
+                        These core concepts guide Japanese traditions and provide the philosophical framework 
+                        for understanding beauty, meaning, and the human experience.
+                    </p>
+
+                    <div class="philosophy-grid">
+                        <div class="philosophy-card fade-in-up">
+                            <div class="philosophy-term">侘寂</div>
+                            <div class="philosophy-title">Wabi-Sabi</div>
+                            <div class="philosophy-description">
+                                Finding beauty in imperfection, impermanence, and incompleteness. This aesthetic 
+                                philosophy celebrates the modest, humble, and authentic, embracing the natural 
+                                cycle of growth, decay, and renewal.
+                            </div>
+                        </div>
+
+                        <div class="philosophy-card fade-in-up">
+                            <div class="philosophy-term">間</div>
+                            <div class="philosophy-title">Ma</div>
+                            <div class="philosophy-description">
+                                The power of negative space and meaningful pause. Ma represents the deliberate 
+                                use of emptiness to create balance, give meaning to form, and provide space 
+                                for contemplation and appreciation.
+                            </div>
+                        </div>
+
+                        <div class="philosophy-card fade-in-up">
+                            <div class="philosophy-term">物の哀れ</div>
+                            <div class="philosophy-title">Mono no Aware</div>
+                            <div class="philosophy-description">
+                                The awareness of the impermanence of all things and a gentle sadness at their 
+                                passing. This concept finds beauty in transience and encourages appreciation 
+                                of fleeting moments.
+                            </div>
+                        </div>
+
+                        <div class="philosophy-card fade-in-up">
+                            <div class="philosophy-term">渋い</div>
+                            <div class="philosophy-title">Shibui</div>
+                            <div class="philosophy-description">
+                                Aesthetic of subtle, unobtrusive beauty that reveals itself through quiet 
+                                contemplation. Shibui objects appear simple but contain hidden depths of 
+                                meaning and craftsmanship.
+                            </div>
+                        </div>
+
+                        <div class="philosophy-card fade-in-up">
+                            <div class="philosophy-term">粋</div>
+                            <div class="philosophy-title">Iki</div>
+                            <div class="philosophy-description">
+                                The aesthetic of refined spontaneity and stylishness. Iki represents an 
+                                attitude of relaxed sophistication, natural elegance, and unpretentious 
+                                grace in personal style and behavior.
+                            </div>
+                        </div>
+
+                        <div class="philosophy-card fade-in-up">
+                            <div class="philosophy-term">玄</div>
+                            <div class="philosophy-title">Yūgen</div>
+                            <div class="philosophy-description">
+                                Profound grace and subtlety that is mysteriously beautiful. Yūgen suggests 
+                                that which lies beneath the surface, the hidden depths that can only be 
+                                sensed through intuition and contemplation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Seasonal Calendar -->
+            <section class="interactive-section">
+                <div class="container">
+                    <div class="seasonal-calendar fade-in-up">
+                        <h3 class="calendar-title">Seasonal Traditions Calendar</h3>
+                        <p>Explore how Japanese traditions change with the seasons, each bringing its own customs and celebrations.</p>
+                        
+                        <div class="seasons-container">
+                            <div class="season-item active" data-season="spring">
+                                <div class="season-name">Spring</div>
+                                <div class="season-description">Cherry blossoms, renewal, new beginnings</div>
+                            </div>
+                            <div class="season-item" data-season="summer">
+                                <div class="season-name">Summer</div>
+                                <div class="season-description">Festivals, fireworks, community celebration</div>
+                            </div>
+                            <div class="season-item" data-season="autumn">
+                                <div class="season-name">Autumn</div>
+                                <div class="season-description">Harvest, reflection, gratitude</div>
+                            </div>
+                            <div class="season-item" data-season="winter">
+                                <div class="season-name">Winter</div>
+                                <div class="season-description">Purification, family, introspection</div>
+                            </div>
+                        </div>
+                        
+                        <div id="season-details" style="margin-top: 2rem; padding: 2rem; background: var(--secondary-color); border-radius: 12px;">
+                            <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Spring Traditions</h4>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">
+                                Spring in Japan is marked by hanami (cherry blossom viewing), the start of the school and fiscal year, 
+                                and various flower festivals. Families gather for picnics under blooming trees, celebrating renewal 
+                                and the fleeting beauty of sakura petals. The season emphasizes new beginnings, fresh starts, 
+                                and appreciation for life's transient moments.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Japanese Culture Heritage. Created with respect and appreciation for Japanese traditions.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        // Seasonal calendar interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const seasonItems = document.querySelectorAll('.season-item');
+            const seasonDetails = document.getElementById('season-details');
+            
+            const seasonData = {
+                spring: {
+                    title: 'Spring Traditions',
+                    content: 'Spring in Japan is marked by hanami (cherry blossom viewing), the start of the school and fiscal year, and various flower festivals. Families gather for picnics under blooming trees, celebrating renewal and the fleeting beauty of sakura petals. The season emphasizes new beginnings, fresh starts, and appreciation for life\'s transient moments.'
+                },
+                summer: {
+                    title: 'Summer Traditions',
+                    content: 'Summer brings vibrant festivals (matsuri) with traditional music, dance, and fireworks. People wear colorful yukata, enjoy seasonal foods like kakigōri (shaved ice), and participate in bon odori dances. The season is marked by community celebrations, ancestral remembrance during Obon, and appreciation for the energy and abundance of life.'
+                },
+                autumn: {
+                    title: 'Autumn Traditions',
+                    content: 'Autumn is celebrated through momijigari (maple leaf viewing), harvest festivals, and thanksgiving ceremonies. The season emphasizes reflection, gratitude, and preparation for winter. Families gather to appreciate the brilliant colors of changing leaves, share seasonal foods like chestnuts and sweet potatoes, and express gratitude for nature\'s abundance.'
+                },
+                winter: {
+                    title: 'Winter Traditions',
+                    content: 'Winter traditions focus on purification, family unity, and preparation for renewal. The New Year (Oshōgatsu) is Japan\'s most important holiday, featuring family gatherings, shrine visits, and traditional foods. The season emphasizes introspection, spiritual purification, and the warmth of human connection during the darkest time of year.'
+                }
+            };
+            
+            seasonItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    seasonItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Update season details
+                    const season = this.dataset.season;
+                    const data = seasonData[season];
+                    
+                    seasonDetails.innerHTML = `
+                        <h4 style="color: var(--primary-color); margin-bottom: 1rem;">${data.title}</h4>
+                        <p style="color: var(--text-secondary); line-height: 1.6;">${data.content}</p>
+                    `;
+                });
+            });
+        });
+        
+        // Initialize text splitting for animations
+        Splitting();
+    </script>
+</body>
+</html>

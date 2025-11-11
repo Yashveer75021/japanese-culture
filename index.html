@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本の文化 - Japanese Culture & Heritage</title>
+    <meta name="description"
+        content="Explore the rich culture, history, and traditions of Japan through an immersive digital experience.">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+
+    <style>
+        :root {
+            --primary-color: #FFB7C5;
+            --secondary-color: #F8F4F8;
+            --accent-color: #FFE4E1;
+            --text-primary: #2C2C2C;
+            --text-secondary: #6B6B6B;
+            --white: #FFFFFF;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Sakura Canvas */
+        #sakura-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--white) 0%, var(--secondary-color) 100%);
+            z-index: -2;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.9;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            z-index: 10;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(255, 183, 197, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 183, 197, 0.4);
+        }
+
+        /* Image Scroller */
+        .image-scroller {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 1000px;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroller-track {
+            display: flex;
+            animation: scroll 30s linear infinite;
+        }
+
+        .scroller-image {
+            width: 200px;
+            height: 120px;
+            object-fit: cover;
+            margin-right: 1rem;
+            border-radius: 8px;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+            position: relative;
+            z-index: 10;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Culture Cards */
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .culture-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .culture-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 183, 197, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .card-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Interactive Features */
+        .interactive-section {
+            background: var(--secondary-color);
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .haiku-generator {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .haiku-display {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .generate-btn {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(255, 183, 197, 0.3);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 183, 197, 0.4);
+        }
+
+        /* Season Switcher */
+        .season-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .season-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .season-btn.active,
+        .season-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-up.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-left.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-right.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .image-scroller {
+                width: 90%;
+                height: 80px;
+            }
+
+            .scroller-image {
+                width: 120px;
+                height: 80px;
+            }
+
+            .culture-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .season-switcher {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .season-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sakura Canvas -->
+    <canvas id="sakura-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">日本文化</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="traditions.html" class="nav-link">Traditions</a></li>
+                <li><a href="art.html" class="nav-link">Art</a></li>
+                <li><a href="travel.html" class="nav-link">Travel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <img src="resources/hero-temple-fuji.jpg" alt="Japanese Temple with Mount Fuji" class="hero-image">
+        <div class="hero-content">
+            <h1 class="hero-title" data-splitting>Discover Japanese Culture</h1>
+            <p class="hero-subtitle">Immerse yourself in the rich heritage, traditions, and beauty of Japan</p>
+            <a href="#culture" class="hero-cta">Explore Culture</a>
+        </div>
+
+        <!-- Image Scroller -->
+        <div class="image-scroller">
+            <div class="scroller-track">
+                <img src="resources/zen-garden.jpg" alt="Zen Garden" class="scroller-image">
+                <img src="resources/bamboo-forest.jpg" alt="Bamboo Forest" class="scroller-image">
+                <img src="resources/temple-kyoto.jpg" alt="Kyoto Temple" class="scroller-image">
+                <img src="resources/pottery-collection.jpg" alt="Japanese Pottery" class="scroller-image">
+                <img src="resources/calligraphy-example.jpg" alt="Calligraphy" class="scroller-image">
+                <img src="resources/tea-house.jpg" alt="Tea House" class="scroller-image">
+                <img src="resources/zen-garden.jpg" alt="Zen Garden" class="scroller-image">
+                <img src="resources/bamboo-forest.jpg" alt="Bamboo Forest" class="scroller-image">
+                <img src="resources/temple-kyoto.jpg" alt="Kyoto Temple" class="scroller-image">
+                <img src="resources/pottery-collection.jpg" alt="Japanese Pottery" class="scroller-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Cultural Overview -->
+            <section id="culture" class="section">
+                <h2 class="section-title fade-in-up">The Essence of Japan</h2>
+                <p class="section-subtitle fade-in-up">
+                    Experience the profound beauty and wisdom of Japanese culture through its traditions,
+                    art, philosophy, and way of life that has inspired the world for centuries.
+                </p>
+
+                <div class="culture-grid">
+                    <div class="culture-card fade-in-left" onclick="window.location.href='history.html'">
+                        <img src="resources/temple-kyoto.jpg" alt="Japanese History" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">Rich History</h3>
+                            <p class="card-description">
+                                Journey through millennia of Japanese history, from ancient Jomon traditions to modern
+                                innovations,
+                                discovering the events and people that shaped this remarkable culture.
+                            </p>
+                            <a href="history.html" class="card-link">Explore History →</a>
+                        </div>
+                    </div>
+
+                    <div class="culture-card fade-in-up" onclick="window.location.href='traditions.html'">
+                        <img src="resources/tea-house.jpg" alt="Japanese Traditions" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">Timeless Traditions</h3>
+                            <p class="card-description">
+                                Experience the beauty of Japanese customs, from the meditative tea ceremony to seasonal
+                                festivals,
+                                each reflecting deep philosophical principles and aesthetic sensibilities.
+                            </p>
+                            <a href="traditions.html" class="card-link">Discover Traditions →</a>
+                        </div>
+                    </div>
+
+                    <div class="culture-card fade-in-right" onclick="window.location.href='art.html'">
+                        <img src="resources/calligraphy-example.jpg" alt="Japanese Art" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">Artistic Heritage</h3>
+                            <p class="card-description">
+                                Marvel at the refined aesthetics of Japanese art, from elegant calligraphy to masterful
+                                pottery,
+                                where every stroke and form embodies centuries of artistic evolution.
+                            </p>
+                            <a href="art.html" class="card-link">View Art Collection →</a>
+                        </div>
+                    </div>
+
+                    <div class="culture-card fade-in-left" onclick="window.location.href='travel.html'">
+                        <img src="resources/zen-garden.jpg" alt="Japan Travel" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">Sacred Destinations</h3>
+                            <p class="card-description">
+                                Discover the most beautiful and culturally significant places in Japan, from ancient
+                                temples
+                                to serene gardens where you can experience authentic Japanese spirituality.
+                            </p>
+                            <a href="travel.html" class="card-link">Plan Your Journey →</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Features -->
+            <section class="interactive-section">
+                <div class="container">
+                    <h2 class="section-title fade-in-up">Interactive Experience</h2>
+
+                    <!-- Seasonal Theme Switcher -->
+                    <div class="season-switcher fade-in-up">
+                        <button class="season-btn active" data-season="spring">Spring</button>
+                        <button class="season-btn" data-season="summer">Summer</button>
+                        <button class="season-btn" data-season="autumn">Autumn</button>
+                        <button class="season-btn" data-season="winter">Winter</button>
+                    </div>
+
+                    <!-- Haiku Generator -->
+                    <div class="haiku-generator fade-in-up">
+                        <h3>Haiku Generator</h3>
+                        <p>Experience the beauty of Japanese poetry with our interactive haiku generator</p>
+                        <div class="haiku-display" id="haiku-display">
+                            cherry blossoms fall<br>
+                            gentle breeze through ancient trees<br>
+                            spring meditation
+                        </div>
+                        <button class="generate-btn" id="generate-haiku">Generate New Haiku</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Philosophy Section -->
+            <section class="section">
+                <h2 class="section-title fade-in-up">Philosophy & Wisdom</h2>
+                <div class="culture-grid">
+                    <div class="fade-in-left">
+                        <h3
+                            style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary);">
+                            間 (Ma) - The Power of Negative Space
+                        </h3>
+                        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                            In Japanese aesthetics, "Ma" represents the meaningful space between elements. It's the
+                            pause in music,
+                            the silence in conversation, the emptiness that gives meaning to form. This principle guides
+                            our
+                            design philosophy, creating breathing room for contemplation and appreciation.
+                        </p>
+                    </div>
+
+                    <div class="fade-in-right">
+                        <h3
+                            style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary);">
+                            侘寂 (Wabi-Sabi) - Finding Beauty in Imperfection
+                        </h3>
+                        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                            Wabi-sabi embraces the imperfect, impermanent, and incomplete. It finds beauty in the
+                            modest, humble,
+                            and unconventional. This aesthetic philosophy reminds us that true beauty lies not in
+                            perfection,
+                            but in the authentic and the aged.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Japanese Culture Heritage. Created with respect and appreciation for Japanese traditions.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        // Initialize text splitting for animations
+        Splitting();
+
+        // Season switcher functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const seasonBtns = document.querySelectorAll('.season-btn');
+
+            seasonBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // Remove active class from all buttons
+                    seasonBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    // Update theme based on season
+                    const season = this.dataset.season;
+                    updateSeasonalTheme(season);
+                });
+            });
+        });
+
+        function updateSeasonalTheme(season) {
+            const root = document.documentElement;
+            const themes = {
+                spring: { primary: '#FFB7C5', secondary: '#F8F4F8', accent: '#FFE4E1' },
+                summer: { primary: '#87CEEB', secondary: '#F0F8FF', accent: '#E0F6FF' },
+                autumn: { primary: '#CD853F', secondary: '#FFF8DC', accent: '#F5DEB3' },
+                winter: { primary: '#E0E0E0', secondary: '#F8F8FF', accent: '#D3D3D3' }
+            };
+
+            const theme = themes[season];
+            root.style.setProperty('--primary-color', theme.primary);
+            root.style.setProperty('--secondary-color', theme.secondary);
+            root.style.setProperty('--accent-color', theme.accent);
+        }
+
+        // Haiku generator
+        const haikuWords = {
+            spring: ['sakura', 'blossom', 'renewal', 'gentle', 'breeze', 'petals', 'cherry', 'trees', 'spring', 'flowers'],
+            summer: ['fireflies', 'festival', 'warmth', 'cicadas', 'lanterns', 'evening', 'garden', 'summer', 'moon', 'night'],
+            autumn: ['maple', 'leaves', 'harvest', 'crimson', 'gold', 'reflection', 'tranquil', 'autumn', 'wind', 'harvest'],
+            winter: ['snow', 'silence', 'meditation', 'peaceful', 'white', 'stillness', 'zen', 'winter', 'frost', 'quiet']
+        };
+
+        document.getElementById('generate-haiku').addEventListener('click', function () {
+            const activeSeason = document.querySelector('.season-btn.active').dataset.season;
+            const haiku = generateHaiku(activeSeason);
+            document.getElementById('haiku-display').innerHTML = haiku;
+        });
+
+        function generateHaiku(season) {
+            const words = haikuWords[season];
+            const line1 = getRandomWords(words, 2).join(' ');
+            const line2 = getRandomWords(words, 3).join(' ');
+            const line3 = getRandomWords(words, 2).join(' ');
+
+            return `${line1}<br>${line2}<br>${line3}`;
+        }
+
+        function getRandomWords(wordArray, count) {
+            const shuffled = [...wordArray].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+    </script>
+</body>
+
+</html>

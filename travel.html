@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Travel - 日本旅行</title>
+    <meta name="description" content="Discover the most beautiful and culturally significant destinations in Japan.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #FFB7C5;
+            --secondary-color: #F8F4F8;
+            --accent-color: #FFE4E1;
+            --text-primary: #2C2C2C;
+            --text-secondary: #6B6B6B;
+            --white: #FFFFFF;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--white) 100%);
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Featured Destinations */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .destination-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .destination-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .destination-content {
+            padding: 2rem;
+        }
+
+        .destination-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-region {
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .destination-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .destination-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-tag {
+            background: var(--secondary-color);
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .destination-cta {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .destination-cta:hover {
+            background: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Cultural Experiences */
+        .experiences-section {
+            background: var(--secondary-color);
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .experience-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .experience-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .experience-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-details {
+            background: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Seasonal Travel */
+        .seasonal-section {
+            padding: 4rem 0;
+        }
+
+        .seasons-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .season-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .season-card:hover,
+        .season-card.active {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .season-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .season-description {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .season-highlights {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Travel Tips */
+        .tips-section {
+            background: var(--secondary-color);
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tip-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .tip-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .tip-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tip-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Interactive Map Placeholder */
+        .map-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .map-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .map-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .map-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .map-cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .map-cta:hover {
+            background: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-up.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-left.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-right.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .seasons-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .experiences-grid,
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">日本文化</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="traditions.html" class="nav-link">Traditions</a></li>
+                <li><a href="art.html" class="nav-link">Art</a></li>
+                <li><a href="travel.html" class="nav-link">Travel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-splitting>Discover Japan</h1>
+            <p class="hero-subtitle">Journey through sacred temples, serene gardens, and ancient cultural sites</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Featured Destinations -->
+            <section class="section">
+                <h2 class="section-title fade-in-up">Sacred Destinations</h2>
+                <p class="section-subtitle fade-in-up">
+                    Explore Japan's most beautiful and culturally significant places, where ancient traditions 
+                    meet natural beauty in perfect harmony.
+                </p>
+
+                <div class="destinations-grid">
+                    <div class="destination-card fade-in-up">
+                        <img src="resources/temple-kyoto.jpg" alt="Kyoto Temples" class="destination-image">
+                        <div class="destination-content">
+                            <div class="destination-name">Kyoto Temples</div>
+                            <div class="destination-region">Kansai Region</div>
+                            <div class="destination-description">
+                                Japan's ancient capital houses over 1,600 temples, including the golden Kinkaku-ji 
+                                and the contemplative rock garden of Ryoan-ji. Each temple represents centuries of 
+                                Buddhist and Shinto spiritual tradition.
+                            </div>
+                            <div class="destination-highlights">
+                                <span class="highlight-tag">UNESCO World Heritage</span>
+                                <span class="highlight-tag">Zen Gardens</span>
+                                <span class="highlight-tag">Traditional Architecture</span>
+                            </div>
+                            <a href="#" class="destination-cta">Explore Kyoto</a>
+                        </div>
+                    </div>
+
+                    <div class="destination-card fade-in-up">
+                        <img src="resources/zen-garden.jpg" alt="Japanese Gardens" class="destination-image">
+                        <div class="destination-content">
+                            <div class="destination-name">Traditional Gardens</div>
+                            <div class="destination-region">Throughout Japan</div>
+                            <div class="destination-description">
+                                From the minimalist rock gardens of Kyoto to the strolling gardens of Tokyo, 
+                                Japanese gardens are living artworks that embody centuries of aesthetic philosophy 
+                                and spiritual practice.
+                            </div>
+                            <div class="destination-highlights">
+                                <span class="highlight-tag">Zen Philosophy</span>
+                                <span class="highlight-tag">Seasonal Beauty</span>
+                                <span class="highlight-tag">Meditation Spaces</span>
+                            </div>
+                            <a href="#" class="destination-cta">Discover Gardens</a>
+                        </div>
+                    </div>
+
+                    <div class="destination-card fade-in-up">
+                        <img src="resources/bamboo-forest.jpg" alt="Natural Sanctuaries" class="destination-image">
+                        <div class="destination-content">
+                            <div class="destination-name">Natural Sanctuaries</div>
+                            <div class="destination-region">Mountains & Forests</div>
+                            <div class="destination-description">
+                                Japan's sacred mountains and ancient forests have been places of spiritual 
+                                retreat for millennia. The bamboo groves of Arashiyama and the cedar forests 
+                                of Yakushima offer profound natural beauty and tranquility.
+                            </div>
+                            <div class="destination-highlights">
+                                <span class="highlight-tag">Sacred Mountains</span>
+                                <span class="highlight-tag">Ancient Forests</span>
+                                <span class="highlight-tag">Pilgrimage Routes</span>
+                            </div>
+                            <a href="#" class="destination-cta">Experience Nature</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cultural Experiences -->
+            <section class="experiences-section">
+                <div class="container">
+                    <h2 class="section-title fade-in-up">Cultural Experiences</h2>
+                    <p class="section-subtitle fade-in-up">
+                        Immerse yourself in authentic Japanese culture through hands-on experiences 
+                        that connect you with centuries of tradition.
+                    </p>
+
+                    <div class="experiences-grid">
+                        <div class="experience-card fade-in-up">
+                            <div class="experience-icon">🍵</div>
+                            <div class="experience-title">Tea Ceremony</div>
+                            <div class="experience-description">
+                                Participate in the ancient art of chanoyu, learning the precise movements 
+                                and deep philosophy behind each gesture in a traditional tea house setting.
+                            </div>
+                            <div class="experience-details">
+                                <strong>Duration:</strong> 2-3 hours<br>
+                                <strong>Location:</strong> Kyoto, Uji<br>
+                                <strong>Best Season:</strong> Spring & Autumn
+                            </div>
+                        </div>
+
+                        <div class="experience-card fade-in-up">
+                            <div class="experience-icon">🎨</div>
+                            <div class="experience-title">Calligraphy Workshop</div>
+                            <div class="experience-description">
+                                Learn the meditative art of Japanese calligraphy from a master teacher, 
+                                discovering how each brushstroke expresses inner character and mindfulness.
+                            </div>
+                            <div class="experience-details">
+                                <strong>Duration:</strong> 3-4 hours<br>
+                                <strong>Location:</strong> Tokyo, Kyoto<br>
+                                <strong>Best Season:</strong> Year-round
+                            </div>
+                        </div>
+
+                        <div class="experience-card fade-in-up">
+                            <div class="experience-icon">🏯</div>
+                            <div class="experience-title">Temple Stay</div>
+                            <div class="experience-description">
+                                Experience monastic life through a temple lodging program, participating 
+                                in meditation, morning prayers, and vegetarian temple cuisine.
+                            </div>
+                            <div class="experience-details">
+                                <strong>Duration:</strong> 1-2 nights<br>
+                                <strong>Location:</strong> Koyasan, Kyoto<br>
+                                <strong>Best Season:</strong> Spring & Autumn
+                            </div>
+                        </div>
+
+                        <div class="experience-card fade-in-up">
+                            <div class="experience-icon">🌸</div>
+                            <div class="experience-title">Ikebana Classes</div>
+                            <div class="experience-description">
+                                Study the meditative art of Japanese flower arrangement, learning how to 
+                                create harmonious compositions that express the beauty of seasonal nature.
+                            </div>
+                            <div class="experience-details">
+                                <strong>Duration:</strong> 2-3 hours<br>
+                                <strong>Location:</strong> Major cities<br>
+                                <strong>Best Season:</strong> Year-round
+                            </div>
+                        </div>
+
+                        <div class="experience-card fade-in-up">
+                            <div class="experience-icon">⚔️</div>
+                            <div class="experience-title">Martial Arts Training</div>
+                            <div class="experience-description">
+                                Train in traditional Japanese martial arts like kendo, aikido, or kyudo, 
+                                learning not just physical techniques but also the spiritual discipline behind them.
+                            </div>
+                            <div class="experience-details">
+                                <strong>Duration:</strong> 2-4 hours<br>
+                                <strong>Location:</strong> Various dojos<br>
+                                <strong>Best Season:</strong> Year-round
+                            </div>
+                        </div>
+
+                        <div class="experience-card fade-in-up">
+                            <div class="experience-icon">🏮</div>
+                            <div class="experience-title">Traditional Crafts</div>
+                            <div class="experience-description">
+                                Learn from master craftsmen in pottery, textile dyeing, or woodworking, 
+                                experiencing the patience and precision required for traditional Japanese crafts.
+                            </div>
+                            <div class="experience-details">
+                                <strong>Duration:</strong> Half-day to multi-day<br>
+                                <strong>Location:</strong> Craft centers<br>
+                                <strong>Best Season:</strong> Year-round
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seasonal Travel -->
+            <section class="seasonal-section">
+                <h2 class="section-title fade-in-up">Seasonal Travel Guide</h2>
+                <p class="section-subtitle fade-in-up">
+                    Each season in Japan offers unique cultural experiences and natural beauty. 
+                    Plan your visit to align with the experiences that speak to your heart.
+                </p>
+
+                <div class="seasons-container">
+                    <div class="season-card active" data-season="spring">
+                        <div class="season-name">Spring</div>
+                        <div class="season-description">March - May</div>
+                        <div class="season-highlights">Cherry blossoms, festivals, new beginnings</div>
+                    </div>
+
+                    <div class="season-card" data-season="summer">
+                        <div class="season-name">Summer</div>
+                        <div class="season-description">June - August</div>
+                        <div class="season-highlights">Fireworks, festivals, mountain retreats</div>
+                    </div>
+
+                    <div class="season-card" data-season="autumn">
+                        <div class="season-name">Autumn</div>
+                        <div class="season-description">September - November</div>
+                        <div class="season-highlights">Maple leaves, harvest, reflection</div>
+                    </div>
+
+                    <div class="season-card" data-season="winter">
+                        <div class="season-name">Winter</div>
+                        <div class="season-description">December - February</div>
+                        <div class="season-highlights">Snow festivals, hot springs, purity</div>
+                    </div>
+                </div>
+
+                <div id="season-info" style="margin-top: 3rem; padding: 2rem; background: var(--secondary-color); border-radius: 12px;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Spring Travel</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        Spring is Japan's most popular travel season, marked by the iconic cherry blossom season from late March to early May. 
+                        This is the perfect time for hanami (flower viewing) parties, visiting temples surrounded by blooming gardens, 
+                        and experiencing the joy of renewal that permeates Japanese culture. The weather is mild, making it ideal for 
+                        walking tours and outdoor cultural activities.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Travel Tips -->
+            <section class="tips-section">
+                <div class="container">
+                    <h2 class="section-title fade-in-up">Cultural Travel Tips</h2>
+                    <p class="section-subtitle fade-in-up">
+                        Travel respectfully and meaningfully with these insights into Japanese customs 
+                        and cultural etiquette for visitors.
+                    </p>
+
+                    <div class="tips-grid">
+                        <div class="tip-item fade-in-up">
+                            <div class="tip-icon">🙏</div>
+                            <div class="tip-title">Respectful Behavior</div>
+                            <div class="tip-description">
+                                Bow when greeting, remove shoes when required, and speak quietly in public spaces. 
+                                These simple gestures show respect for Japanese customs and cultural values.
+                            </div>
+                        </div>
+
+                        <div class="tip-item fade-in-up">
+                            <div class="tip-icon">📸</div>
+                            <div class="tip-title">Photography Etiquette</div>
+                            <div class="tip-description">
+                                Always ask permission before photographing people or inside temples. Some sacred 
+                                sites prohibit photography entirely to preserve the spiritual atmosphere.
+                            </div>
+                        </div>
+
+                        <div class="tip-item fade-in-up">
+                            <div class="tip-icon">🍽️</div>
+                            <div class="tip-title">Dining Customs</div>
+                            <div class="tip-description">
+                                Say "itadakimasu" before eating and "gochisousama" after. Don't stick chopsticks 
+                                upright in rice, and try to finish all food as a sign of appreciation.
+                            </div>
+                        </div>
+
+                        <div class="tip-item fade-in-up">
+                            <div class="tip-icon">🏮</div>
+                            <div class="tip-title">Temple Visits</div>
+                            <div class="tip-description">
+                                Dress modestly, observe quietly, and follow posted guidelines. Purify hands and mouth 
+                                at water basins, and make small offerings if you wish to participate.
+                            </div>
+                        </div>
+
+                        <div class="tip-item fade-in-up">
+                            <div class="tip-icon">🚇</div>
+                            <div class="tip-title">Public Transport</div>
+                            <div class="tip-description">
+                                Keep conversations quiet, offer seats to elderly passengers, and avoid eating or drinking. 
+                                The Japanese value consideration for others in shared spaces.
+                            </div>
+                        </div>
+
+                        <div class="tip-item fade-in-up">
+                            <div class="tip-icon">💴</div>
+                            <div class="tip-title">Tipping Culture</div>
+                            <div class="tip-description">
+                                Tipping is not customary in Japan and can even be considered rude. Excellent service 
+                                is standard, and gratitude is expressed through respectful behavior instead.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Map -->
+            <section class="map-section">
+                <div class="container">
+                    <div class="map-container fade-in-up">
+                        <h3 class="map-title">Explore Cultural Destinations</h3>
+                        <div class="map-placeholder">
+                            Interactive Map of Japan<br>
+                            Showing Cultural Sites & Experiences
+                        </div>
+                        <div class="map-description">
+                            Discover the geographic distribution of Japan's cultural treasures, from the temples 
+                            of Kyoto to the gardens of Tokyo, the pottery villages of Kyushu to the sacred 
+                            mountains of the Japanese Alps.
+                        </div>
+                        <a href="#" class="map-cta">Explore Interactive Map</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Japanese Culture Heritage. Created with respect and appreciation for Japanese traditions.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        // Seasonal travel information
+        document.addEventListener('DOMContentLoaded', function() {
+            const seasonCards = document.querySelectorAll('.season-card');
+            const seasonInfo = document.getElementById('season-info');
+            
+            const seasonData = {
+                spring: {
+                    title: 'Spring Travel',
+                    content: 'Spring is Japan\'s most popular travel season, marked by the iconic cherry blossom season from late March to early May. This is the perfect time for hanami (flower viewing) parties, visiting temples surrounded by blooming gardens, and experiencing the joy of renewal that permeates Japanese culture. The weather is mild, making it ideal for walking tours and outdoor cultural activities.'
+                },
+                summer: {
+                    title: 'Summer Travel',
+                    content: 'Summer brings vibrant festivals (matsuri) throughout Japan, with spectacular fireworks displays, traditional dance performances, and street food celebrations. This is the season for mountain retreats, beach visits, and experiencing the energy of Japanese summer culture. While hot and humid, summer offers unique cultural experiences like outdoor tea ceremonies and evening temple illuminations.'
+                },
+                autumn: {
+                    title: 'Autumn Travel',
+                    content: 'Autumn is considered by many to be Japan\'s most beautiful season, with brilliant maple leaves (koyo) creating stunning landscapes. This is the ideal time for temple visits, garden strolls, and harvest festivals. The weather is comfortable, and the cultural emphasis on reflection and gratitude makes it perfect for contemplative travel experiences.'
+                },
+                winter: {
+                    title: 'Winter Travel',
+                    content: 'Winter offers a serene and peaceful side of Japan, with snow-covered temples, hot spring (onsen) experiences, and traditional New Year celebrations. This is the season for intimate cultural encounters, from tea ceremony lessons to traditional craft workshops. The Sapporo Snow Festival and winter illuminations create magical cultural experiences.'
+                }
+            };
+            
+            seasonCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove active class from all cards
+                    seasonCards.forEach(c => c.classList.remove('active'));
+                    // Add active class to clicked card
+                    this.classList.add('active');
+                    
+                    // Update season info
+                    const season = this.dataset.season;
+                    const data = seasonData[season];
+                    
+                    seasonInfo.innerHTML = `
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">${data.title}</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.6;">${data.content}</p>
+                    `;
+                });
+            });
+        });
+        
+        // Initialize text splitting for animations
+        Splitting();
+    </script>
+</body>
+</html>
